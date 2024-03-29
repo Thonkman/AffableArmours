@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "X": {
+      "item": "minecraft:scute"
+    },
+    "M": {
+      "item": "minecraft:bone_meal"
+    }
+  },
+  "pattern": [
+    "XXX",
+    "XMX",
+    "XMX"
+  ],
+  "result": {
+    "item": "affable_armours:turtle_plastron"
+  },
+  "show_notification": true
+}
