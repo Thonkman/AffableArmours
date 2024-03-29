@@ -37,9 +37,12 @@ public abstract class PlayerEntityInject extends LivingEntity {
 	@Final
 	public static int MAX_HEALTH;
 
+
 	@Inject(method = "tick", at = @At("TAIL"))
 	public void tick(CallbackInfo ci) {
 		updateTurtleArmour();
+		updatePhantomHood();
+		updatePhantomArmour();
 	}
 
 
@@ -51,10 +54,29 @@ public abstract class PlayerEntityInject extends LivingEntity {
 		ItemStack chestEquipment = getEquippedStack(EquipmentSlot.CHEST);
 		ItemStack legEquipment = getEquippedStack(EquipmentSlot.LEGS);
 		ItemStack feetEquipment = getEquippedStack(EquipmentSlot.FEET);
-	if ((this.getHealth() <= (float) MAX_HEALTH /4 ) && headEquipment.isOf(Items.TURTLE_HELMET) && chestEquipment.isOf(Armours.TURTLE_CARAPACE) && legEquipment.isOf(Armours.TURTLE_PLASTRON) && feetEquipment.isOf(Armours.TURTLE_FLIPPERS)) {
-			provideResistance(100);
-			provideSlowness(100);
+		if ((this.getHealth() <= (float) MAX_HEALTH /4 ) && headEquipment.isOf(Items.TURTLE_HELMET) && chestEquipment.isOf(Armours.TURTLE_CARAPACE) && legEquipment.isOf(Armours.TURTLE_PLASTRON) && feetEquipment.isOf(Armours.TURTLE_FLIPPERS)) {
+			provideResistance(20);
+			provideSlowness(20);
 		}
+	}
+	@Unique
+	private void updatePhantomHood() {
+		ItemStack headEquipment = getEquippedStack(EquipmentSlot.HEAD);
+		if (headEquipment.isOf(Armours.PHANTOM_HOOD) && this.getWorld().getTimeOfDay() >= 13000 && this.getWorld().getTimeOfDay() <= 23000 && !this.hasStatusEffect(StatusEffects.NIGHT_VISION) ) {
+			provideNightVision(1200);
+		}
+	}
+	@Unique
+	private void updatePhantomArmour() {
+		ItemStack headEquipment = getEquippedStack(EquipmentSlot.HEAD);
+		ItemStack chestEquipment = getEquippedStack(EquipmentSlot.CHEST);
+		ItemStack legEquipment = getEquippedStack(EquipmentSlot.LEGS);
+		ItemStack feetEquipment = getEquippedStack(EquipmentSlot.FEET);
+		if ((this.isSneaking() && this.isFallFlying()) && headEquipment.isOf(Armours.PHANTOM_HOOD) && chestEquipment.isOf(Items.ELYTRA) && legEquipment.isOf(Armours.PHANTOM_MANTLE) && feetEquipment.isOf(Armours.PHANTOM_SLIPPERS)) {
+			provideSlowFalling(1);
+		} //else if ((this.jumping && this.isFallFlying()) && headEquipment.isOf(Armours.PHANTOM_HOOD) && chestEquipment.isOf(Items.ELYTRA) && legEquipment.isOf(Armours.PHANTOM_MANTLE) && feetEquipment.isOf(Armours.PHANTOM_SLIPPERS)) {
+			//provideLevitation(10);
+		//}
 	}
 
 	@SuppressWarnings("SameParameterValue")
@@ -67,5 +89,19 @@ public abstract class PlayerEntityInject extends LivingEntity {
 	private void provideSlowness(int sduration) {
 		((LivingEntityInvoker) this).invokeAddStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, sduration, 5, false, true, true));
 	}
+	@SuppressWarnings("SameParameterValue")
+	@Unique
+	private void provideNightVision(int nvduration) {
+		((LivingEntityInvoker) this).invokeAddStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, nvduration, 0, false, true, true));
+	}
+	@SuppressWarnings("SameParameterValue")
+	@Unique
+	private void provideSlowFalling(int sfduration) {
+		((LivingEntityInvoker) this).invokeAddStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, sfduration, 0, false, true, true));
+	}
+//	@Unique
+//	private void provideLevitation(int lduration) {
+//		((LivingEntityInvoker) this).invokeAddStatusEffect(new StatusEffectInstance(StatusEffects.LEVITATION, lduration, 0, false, true, true));
+//	}
 
 }
