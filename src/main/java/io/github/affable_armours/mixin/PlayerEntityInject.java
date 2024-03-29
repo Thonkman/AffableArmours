@@ -2,6 +2,7 @@ package io.github.affable_armours.mixin;
 
 
 import io.github.affable_armours.armours.Armours;
+import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -38,6 +39,12 @@ public abstract class PlayerEntityInject extends LivingEntity {
 	public static int MAX_HEALTH;
 
 
+	@Shadow
+	public abstract boolean isSwimming();
+
+	@Shadow
+	public abstract void updateSwimming();
+
 	@Inject(method = "tick", at = @At("TAIL"))
 	public void tick(CallbackInfo ci) {
 		updateTurtleArmour();
@@ -57,6 +64,7 @@ public abstract class PlayerEntityInject extends LivingEntity {
 		if ((this.getHealth() <= (float) MAX_HEALTH /4 ) && headEquipment.isOf(Items.TURTLE_HELMET) && chestEquipment.isOf(Armours.TURTLE_CARAPACE) && legEquipment.isOf(Armours.TURTLE_PLASTRON) && feetEquipment.isOf(Armours.TURTLE_FLIPPERS)) {
 			provideResistance(20);
 			provideSlowness(20);
+			this.setPose(EntityPose.SWIMMING);
 		}
 	}
 	@Unique
