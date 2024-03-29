@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "affable_armours:item/turtle_plastron"
+  }
+}
