@@ -26,3 +26,41 @@ Having the full set equipped gives you *Stalker of the Night Sky*.
 Stalker of the Night Sky grants you the ability to hold shift while gliding with the elytra to fall slower.
 
 ### Shulker Set
+Adds a set to help improve survivability while using the elytra
+
+#### Shulker Shell (Helmet)
+
+#### Shulker Pads (Leggings)
+
+#### Shulker Boots (Boots)
+
+Having the full set equipped gives you *Hermit King*.
+Hermit King lets you hold shift to shield yourself from attacks, just like holding right click with a regular shield.
+
+### Dragon Set
+Adds a set to mimic the abilities of a dragon
+
+#### Dragon Visor (Helmet)
+
+#### Dragon Scalemail (Leggings)
+
+#### Dragon Claws (Boots)
+
+Having the full set equipped gives you *There can only be one*. - set to change
+There can only be one lets you hold shift on the ground to charge up a leaping soar into the air.
+Holding shift while mid-air spreads dragons breath on the ground below you.
+
+### Sculk Armour
+
+#### Sculk Helmet
+
+#### Sculk Chestplate
+
+#### Sculk Leggings
+
+#### Sculk Boots
+
+Having the full set equipped gives you *Infested* - set to change
+Infested grants you the ability to sink/swim/dig into sculk?
+
+### Warden Hat
