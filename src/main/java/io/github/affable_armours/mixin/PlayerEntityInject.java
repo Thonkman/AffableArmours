@@ -50,6 +50,7 @@ public abstract class PlayerEntityInject extends LivingEntity {
 		updateTurtleArmour();
 		updatePhantomHood();
 		updatePhantomArmour();
+		updateShulkerArmour();
 	}
 
 
@@ -82,10 +83,19 @@ public abstract class PlayerEntityInject extends LivingEntity {
 		ItemStack feetEquipment = getEquippedStack(EquipmentSlot.FEET);
 		if ((this.isSneaking() && this.isFallFlying()) && headEquipment.isOf(Armours.PHANTOM_HOOD) && chestEquipment.isOf(Items.ELYTRA) && legEquipment.isOf(Armours.PHANTOM_MANTLE) && feetEquipment.isOf(Armours.PHANTOM_SLIPPERS)) {
 			provideSlowFalling(1);
-		} //else if ((this.jumping && this.isFallFlying()) && headEquipment.isOf(Armours.PHANTOM_HOOD) && chestEquipment.isOf(Items.ELYTRA) && legEquipment.isOf(Armours.PHANTOM_MANTLE) && feetEquipment.isOf(Armours.PHANTOM_SLIPPERS)) {
-			//provideLevitation(10);
-		//}
+		}
 	}
+	@Unique
+	private void updateShulkerArmour() {
+		ItemStack headEquipment = getEquippedStack(EquipmentSlot.HEAD);
+		ItemStack chestEquipment = getEquippedStack(EquipmentSlot.CHEST);
+		ItemStack legEquipment = getEquippedStack(EquipmentSlot.LEGS);
+		ItemStack feetEquipment = getEquippedStack(EquipmentSlot.FEET);
+		if (headEquipment.isOf(Armours.SHULKER_SHELL) && chestEquipment.isOf(Items.ELYTRA) && legEquipment.isOf(Armours.SHULKER_PADS) && feetEquipment.isOf(Armours.SHULKER_BOOTS)) {
+			provideSlowFalling(1);
+		}
+	}
+
 
 	@SuppressWarnings("SameParameterValue")
 	@Unique
@@ -107,9 +117,5 @@ public abstract class PlayerEntityInject extends LivingEntity {
 	private void provideSlowFalling(int sfduration) {
 		((LivingEntityInvoker) this).invokeAddStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, sfduration, 0, false, true, true));
 	}
-//	@Unique
-//	private void provideLevitation(int lduration) {
-//		((LivingEntityInvoker) this).invokeAddStatusEffect(new StatusEffectInstance(StatusEffects.LEVITATION, lduration, 0, false, true, true));
-//	}
 
 }
