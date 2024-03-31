@@ -50,6 +50,7 @@ public abstract class PlayerEntityInject extends LivingEntity {
 		updateTurtleArmour();
 		updatePhantomHood();
 		updatePhantomArmour();
+		updateSculkArmour();
 	}
 
 
@@ -82,9 +83,17 @@ public abstract class PlayerEntityInject extends LivingEntity {
 		ItemStack feetEquipment = getEquippedStack(EquipmentSlot.FEET);
 		if ((this.isSneaking() && this.isFallFlying()) && headEquipment.isOf(Armours.PHANTOM_HOOD) && chestEquipment.isOf(Items.ELYTRA) && legEquipment.isOf(Armours.PHANTOM_MANTLE) && feetEquipment.isOf(Armours.PHANTOM_SLIPPERS)) {
 			provideSlowFalling(1);
-		} //else if ((this.jumping && this.isFallFlying()) && headEquipment.isOf(Armours.PHANTOM_HOOD) && chestEquipment.isOf(Items.ELYTRA) && legEquipment.isOf(Armours.PHANTOM_MANTLE) && feetEquipment.isOf(Armours.PHANTOM_SLIPPERS)) {
-			//provideLevitation(10);
-		//}
+		}
+	}
+	@Unique
+	private void updateSculkArmour() {
+		ItemStack headEquipment = getEquippedStack(EquipmentSlot.HEAD);
+		ItemStack chestEquipment = getEquippedStack(EquipmentSlot.CHEST);
+		ItemStack legEquipment = getEquippedStack(EquipmentSlot.LEGS);
+		ItemStack feetEquipment = getEquippedStack(EquipmentSlot.FEET);
+		if (headEquipment.isOf(Armours.SCULK_HELMET) && chestEquipment.isOf(Armours.SCULK_CHESTPLATE) && legEquipment.isOf(Armours.SCULK_LEGGINGS) && feetEquipment.isOf(Armours.SCULK_BOOTS)) {
+			//Make it give darkness, strength and slowness, then highlight all mobs that trigger a sculk sensor/screamer (including calibrated)
+		}
 	}
 
 	@SuppressWarnings("SameParameterValue")
@@ -107,9 +116,6 @@ public abstract class PlayerEntityInject extends LivingEntity {
 	private void provideSlowFalling(int sfduration) {
 		((LivingEntityInvoker) this).invokeAddStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, sfduration, 0, false, true, true));
 	}
-//	@Unique
-//	private void provideLevitation(int lduration) {
-//		((LivingEntityInvoker) this).invokeAddStatusEffect(new StatusEffectInstance(StatusEffects.LEVITATION, lduration, 0, false, true, true));
-//	}
+
 
 }
