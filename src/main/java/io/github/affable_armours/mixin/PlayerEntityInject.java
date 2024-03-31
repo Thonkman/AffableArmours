@@ -50,6 +50,7 @@ public abstract class PlayerEntityInject extends LivingEntity {
 		updateTurtleArmour();
 		updatePhantomHood();
 		updatePhantomArmour();
+		updateDragonArmour();
 	}
 
 
@@ -82,9 +83,18 @@ public abstract class PlayerEntityInject extends LivingEntity {
 		ItemStack feetEquipment = getEquippedStack(EquipmentSlot.FEET);
 		if ((this.isSneaking() && this.isFallFlying()) && headEquipment.isOf(Armours.PHANTOM_HOOD) && chestEquipment.isOf(Items.ELYTRA) && legEquipment.isOf(Armours.PHANTOM_MANTLE) && feetEquipment.isOf(Armours.PHANTOM_SLIPPERS)) {
 			provideSlowFalling(1);
-		} //else if ((this.jumping && this.isFallFlying()) && headEquipment.isOf(Armours.PHANTOM_HOOD) && chestEquipment.isOf(Items.ELYTRA) && legEquipment.isOf(Armours.PHANTOM_MANTLE) && feetEquipment.isOf(Armours.PHANTOM_SLIPPERS)) {
-			//provideLevitation(10);
-		//}
+		}
+	}
+	@Unique
+	private void updateDragonArmour() {
+		ItemStack headEquipment = getEquippedStack(EquipmentSlot.HEAD);
+		ItemStack chestEquipment = getEquippedStack(EquipmentSlot.CHEST);
+		ItemStack legEquipment = getEquippedStack(EquipmentSlot.LEGS);
+		ItemStack feetEquipment = getEquippedStack(EquipmentSlot.FEET);
+		if (headEquipment.isOf(Armours.DRAGON_VISOR) && chestEquipment.isOf(Items.ELYTRA) && legEquipment.isOf(Armours.DRAGON_SCALEMAIL) && feetEquipment.isOf(Armours.DRAGON_CLAWS)) {
+			//Holding shift for 5 seconds while on the ground will shoot you up in the air (maybe holding it for longer will send you higher?) I'm talking to like +150y height.
+			// Holding shift while gliding (its called fall flying) Will spread Dragons breath where the player is facing like how the dragon does
+		}
 	}
 
 	@SuppressWarnings("SameParameterValue")
@@ -107,9 +117,6 @@ public abstract class PlayerEntityInject extends LivingEntity {
 	private void provideSlowFalling(int sfduration) {
 		((LivingEntityInvoker) this).invokeAddStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, sfduration, 0, false, true, true));
 	}
-//	@Unique
-//	private void provideLevitation(int lduration) {
-//		((LivingEntityInvoker) this).invokeAddStatusEffect(new StatusEffectInstance(StatusEffects.LEVITATION, lduration, 0, false, true, true));
-//	}
+
 
 }
