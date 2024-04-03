@@ -92,7 +92,9 @@ public abstract class PlayerEntityInject extends LivingEntity {
 		ItemStack legEquipment = getEquippedStack(EquipmentSlot.LEGS);
 		ItemStack feetEquipment = getEquippedStack(EquipmentSlot.FEET);
 		if (headEquipment.isOf(Armours.SHULKER_SHELL) && chestEquipment.isOf(Items.ELYTRA) && legEquipment.isOf(Armours.SHULKER_PADS) && feetEquipment.isOf(Armours.SHULKER_BOOTS)) {
-			provideSlowFalling(1);
+			if (this.isSneaking()) {
+				//make a shield!
+			}
 		}
 	}
 
