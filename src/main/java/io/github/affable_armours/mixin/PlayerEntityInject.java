@@ -12,6 +12,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.world.World;
+import net.minecraft.world.event.vibration.VibrationManager;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -23,7 +24,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 
 @Mixin(PlayerEntity.class)
-public abstract class PlayerEntityInject extends LivingEntity {
+public abstract class PlayerEntityInject extends LivingEntity implements VibrationManager {
 
 
 	protected PlayerEntityInject(EntityType<? extends LivingEntity> entityType, World world) {
@@ -64,7 +65,7 @@ public abstract class PlayerEntityInject extends LivingEntity {
 		ItemStack feetEquipment = getEquippedStack(EquipmentSlot.FEET);
 		if ((this.getHealth() <= (float) MAX_HEALTH /4 ) && headEquipment.isOf(Items.TURTLE_HELMET) && chestEquipment.isOf(Armours.TURTLE_CARAPACE) && legEquipment.isOf(Armours.TURTLE_PLASTRON) && feetEquipment.isOf(Armours.TURTLE_FLIPPERS)) {
 			provideResistance(20);
-			provideSlowness(20);
+			provideSlownessVI(20);
 			this.setPose(EntityPose.SWIMMING);
 		}
 	}
@@ -93,6 +94,10 @@ public abstract class PlayerEntityInject extends LivingEntity {
 		ItemStack feetEquipment = getEquippedStack(EquipmentSlot.FEET);
 		if (headEquipment.isOf(Armours.SCULK_HELMET) && chestEquipment.isOf(Armours.SCULK_CHESTPLATE) && legEquipment.isOf(Armours.SCULK_LEGGINGS) && feetEquipment.isOf(Armours.SCULK_BOOTS)) {
 			//Make it give darkness, strength and slowness, then highlight all mobs that trigger a sculk sensor/screamer (including calibrated)
+			provideDarkness(200);
+			provideSlownessI(200);
+			provideStrength(200);
+
 		}
 	}
 
@@ -103,7 +108,7 @@ public abstract class PlayerEntityInject extends LivingEntity {
 	}
 	@SuppressWarnings("SameParameterValue")
 	@Unique
-	private void provideSlowness(int sduration) {
+	private void provideSlownessVI(int sduration) {
 		((LivingEntityInvoker) this).invokeAddStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, sduration, 5, false, true, true));
 	}
 	@SuppressWarnings("SameParameterValue")
@@ -116,6 +121,20 @@ public abstract class PlayerEntityInject extends LivingEntity {
 	private void provideSlowFalling(int sfduration) {
 		((LivingEntityInvoker) this).invokeAddStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, sfduration, 0, false, true, true));
 	}
-
+	@SuppressWarnings("SameParameterValue")
+	@Unique
+	private void provideDarkness(int dduration) {
+		((LivingEntityInvoker) this).invokeAddStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, dduration, 0, false, true, true));
+	}
+	@Unique
+	@SuppressWarnings("SameParameterValue")
+	private void provideSlownessI(int sIduration) {
+		((LivingEntityInvoker) this).invokeAddStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, sIduration, 0, false, true, true));
+	}
+	@Unique
+	@SuppressWarnings("SameParameterValue")
+	private void provideStrength(int stduration) {
+		((LivingEntityInvoker) this).invokeAddStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, stduration, 0, false, true, true));
+	}
 
 }

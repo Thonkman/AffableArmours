@@ -9,7 +9,7 @@ import net.minecraft.sound.SoundEvents;
 
 public class SculkArmourMaterial implements ArmorMaterial {
 	private static final int[] BASE_DURABILITY = new int[] {407, 592, 555, 481};
-	private static final int[] PROTECTION_VALUES = new int[] {3, 7, 5, 3};
+	private static final int[] PROTECTION_VALUES = new int[] {3, 8, 6, 3};
 	@Override
 	public int getDurability(ArmorItem.ArmorSlot slot) {
 		return BASE_DURABILITY[slot.getEquipmentSlot().getEntitySlotId()];
