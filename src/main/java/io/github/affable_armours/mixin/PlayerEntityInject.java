@@ -12,6 +12,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.world.World;
+import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -30,7 +31,15 @@ public abstract class PlayerEntityInject extends LivingEntity {
 		super(entityType, world);
 	}
 
-	@Shadow
+
+    @Unique
+	public boolean isShulking() {
+        return this.isBlocking();
+		//TODO: i want this to be true (so that it blocks)
+    }
+
+
+    @Shadow
 	public abstract ItemStack getEquippedStack(EquipmentSlot slot);
 
 
@@ -44,6 +53,10 @@ public abstract class PlayerEntityInject extends LivingEntity {
 
 	@Shadow
 	public abstract void updateSwimming();
+
+	@Shadow
+	@Final
+	private static Logger LOGGER;
 
 	@Inject(method = "tick", at = @At("TAIL"))
 	public void tick(CallbackInfo ci) {
@@ -94,6 +107,8 @@ public abstract class PlayerEntityInject extends LivingEntity {
 		if (headEquipment.isOf(Armours.SHULKER_SHELL) && chestEquipment.isOf(Items.ELYTRA) && legEquipment.isOf(Armours.SHULKER_PADS) && feetEquipment.isOf(Armours.SHULKER_BOOTS)) {
 			if (this.isSneaking()) {
 				//make a shield!
+				this.isShulking() = true;
+				LOGGER.info(String.valueOf(isBlocking()));
 			}
 		}
 	}
