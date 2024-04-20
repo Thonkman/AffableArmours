@@ -26,10 +26,7 @@ public record ApplyGlowingEventListener(PositionSource positionSource, int range
 	@Override
 	public boolean listen(ServerWorld world, GameEvent event, GameEvent.Context context, Vec3d pos) {
 		if (event == GameEvent.SCULK_SENSOR_TENDRILS_CLICKING) {
-			world.getEntitiesByType(TypeFilter.instanceOf(Entity.class), (d) -> d instanceof LivingEntity).forEach((e) -> {
-				((LivingEntityInvoker) context.sourceEntity()).invokeAddStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 423, 0, false, true, true));
-			});
-
+			((LivingEntityInvoker) context.sourceEntity()).invokeAddStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 423, 0, false, true, true));
 			return true;
 		}
 
