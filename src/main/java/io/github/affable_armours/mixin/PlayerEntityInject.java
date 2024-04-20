@@ -8,11 +8,18 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.passive.AllayEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraft.world.event.vibration.VibrationManager;
+import net.minecraft.world.event.GameEvent;
+import net.minecraft.world.event.PositionSource;
+import net.minecraft.world.event.listener.GameEventListener;
+import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -24,9 +31,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 
 @Mixin(PlayerEntity.class)
-public abstract class PlayerEntityInject extends LivingEntity implements VibrationManager {
-
-
+public abstract class PlayerEntityInject extends LivingEntity implements GameEventListener {
 	protected PlayerEntityInject(EntityType<? extends LivingEntity> entityType, World world) {
 		super(entityType, world);
 	}
@@ -46,6 +51,10 @@ public abstract class PlayerEntityInject extends LivingEntity implements Vibrati
 	@Shadow
 	public abstract void updateSwimming();
 
+	@Shadow
+	@Final
+	private static Logger LOGGER;
+
 	@Inject(method = "tick", at = @At("TAIL"))
 	public void tick(CallbackInfo ci) {
 		updateTurtleArmour();
@@ -53,9 +62,6 @@ public abstract class PlayerEntityInject extends LivingEntity implements Vibrati
 		updatePhantomArmour();
 		updateSculkArmour();
 	}
-
-
-
 
 	@Unique
 	private void updateTurtleArmour() {
@@ -86,6 +92,7 @@ public abstract class PlayerEntityInject extends LivingEntity implements Vibrati
 			provideSlowFalling(1);
 		}
 	}
+
 	@Unique
 	private void updateSculkArmour() {
 		ItemStack headEquipment = getEquippedStack(EquipmentSlot.HEAD);
@@ -97,7 +104,6 @@ public abstract class PlayerEntityInject extends LivingEntity implements Vibrati
 			provideDarkness(200);
 			provideSlownessI(200);
 			provideStrength(200);
-
 		}
 	}
 
