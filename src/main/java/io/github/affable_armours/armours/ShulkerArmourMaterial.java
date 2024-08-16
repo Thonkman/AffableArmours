@@ -7,6 +7,7 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 
+
 public class ShulkerArmourMaterial implements ArmorMaterial {
 	private static final int[] BASE_DURABILITY = new int[] {407, 592, 555, 481};
 	private static final int[] PROTECTION_VALUES = new int[] {3, 7, 5, 3};
