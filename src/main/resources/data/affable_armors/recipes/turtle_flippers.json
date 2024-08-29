@@ -7,12 +7,12 @@
     }
   },
   "pattern": [
+    "   ",
     "X X",
-    "XXX",
-    "XXX"
+    "X X"
   ],
   "result": {
-    "item": "affable_armours:turtle_carapace"
+    "item": "affable_armors:turtle_flippers"
   },
   "show_notification": true
 }

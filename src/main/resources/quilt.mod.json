@@ -2,39 +2,40 @@
 	"schema_version": 1,
 	"quilt_loader": {
 		"group": "${group}",
-		"id": "affable_armours",
+		"id": "affable_armors",
 		"version": "${version}",
 		"metadata": {
-			"name": "Affable Armours",
-			"description": "Armours that are affable!",
+			"name": "Affable Armors",
+			"description": "Armors that are affable!",
 			"contributors": {
-				"Your name here": "Thonkman"
+				"thonkman": "chief bozo"
 			},
 			"contact": {
 				"homepage": "https://example.com/",
 				"issues": "https://github.com/QuiltMC/quilt-template-mod/issues",
 				"sources": "https://github.com/QuiltMC/quilt-template-mod"
 			},
-			"icon": "assets/affable_armours/icon.png"
+			"icon": "assets/affable_armors/icon.png"
 		},
 		"intermediate_mappings": "net.fabricmc:intermediary",
 		"entrypoints": {
-			"init": "io.github.affable_armours.AffableArmours"
+			"main": "io.github.affable_armors.AffableArmors",
+			"client": "io.github.affable_armors.client.AffableArmorsClient"
 		},
 		"depends": [
 			{
 				"id": "quilt_loader",
-				"versions": ">=0.19.1"
+				"versions": ">=0.23.0"
 			},
 			{
-				"id": "quilted_fabric_api",
-				"versions": ">=7.0.2"
+				"id": "fabric-api",
+				"versions": "*"
 			},
 			{
 				"id": "minecraft",
-				"versions": ">=1.20"
+				"versions": ">=1.21"
 			}
 		]
 	},
-	"mixin": "affable_armours.mixins.json"
+	"mixin": "affable_armors.mixins.json"
 }

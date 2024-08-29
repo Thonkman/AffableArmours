@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "affable_armours:item/turtle_carapace"
+    "layer0": "affable_armors:item/phantom_hood"
   }
 }

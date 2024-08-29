@@ -1,12 +1,10 @@
-package io.github.affable_armours;
+package io.github.affable_armors;
 
-import io.github.affable_armours.mixin.LivingEntityInvoker;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
+import io.github.affable_armors.mixin.LivingEntityInvoker;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.registry.Holder;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.TypeFilter;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.event.GameEvent;
 import net.minecraft.world.event.PositionSource;
@@ -24,12 +22,17 @@ public record ApplyGlowingEventListener(PositionSource positionSource, int range
 	}
 
 	@Override
-	public boolean listen(ServerWorld world, GameEvent event, GameEvent.Context context, Vec3d pos) {
-		if (event == GameEvent.SCULK_SENSOR_TENDRILS_CLICKING) {
+	public boolean listen(ServerWorld world, Holder<GameEvent> event, GameEvent.Context context, Vec3d pos) {
+		if (event.equals(GameEvent.SCULK_SENSOR_TENDRILS_CLICKING)) {
 			((LivingEntityInvoker) context.sourceEntity()).invokeAddStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 423, 0, false, true, true));
 			return true;
 		}
 
 		return false;
+	}
+
+	@Override
+	public DeliveryMode getDeliveryMode() {
+		return DeliveryMode.UNSPECIFIED;
 	}
 }

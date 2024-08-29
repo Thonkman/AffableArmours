@@ -1,23 +1,17 @@
-package io.github.affable_armours.mixin;
+package io.github.affable_armors.mixin;
 
 
-import io.github.affable_armours.armours.Armours;
+import io.github.affable_armors.armors.Armors;
 import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.passive.AllayEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraft.world.event.GameEvent;
-import net.minecraft.world.event.PositionSource;
 import net.minecraft.world.event.listener.GameEventListener;
 import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Final;
@@ -69,7 +63,7 @@ public abstract class PlayerEntityInject extends LivingEntity implements GameEve
 		ItemStack chestEquipment = getEquippedStack(EquipmentSlot.CHEST);
 		ItemStack legEquipment = getEquippedStack(EquipmentSlot.LEGS);
 		ItemStack feetEquipment = getEquippedStack(EquipmentSlot.FEET);
-		if ((this.getHealth() <= (float) MAX_HEALTH /4 ) && headEquipment.isOf(Items.TURTLE_HELMET) && chestEquipment.isOf(Armours.TURTLE_CARAPACE) && legEquipment.isOf(Armours.TURTLE_PLASTRON) && feetEquipment.isOf(Armours.TURTLE_FLIPPERS)) {
+		if ((this.getHealth() <= (float) MAX_HEALTH /4 ) && headEquipment.isOf(Items.TURTLE_HELMET) && chestEquipment.isOf(Armors.turtleCarapace) && legEquipment.isOf(Armors.turtlePlastron) && feetEquipment.isOf(Armors.turtleFlippers)) {
 			provideResistance(20);
 			provideSlownessVI(20);
 			this.setPose(EntityPose.SWIMMING);
@@ -78,7 +72,7 @@ public abstract class PlayerEntityInject extends LivingEntity implements GameEve
 	@Unique
 	private void updatePhantomHood() {
 		ItemStack headEquipment = getEquippedStack(EquipmentSlot.HEAD);
-		if (headEquipment.isOf(Armours.PHANTOM_HOOD) && this.getWorld().getTimeOfDay() >= 13000 && this.getWorld().getTimeOfDay() <= 23000 && !this.hasStatusEffect(StatusEffects.NIGHT_VISION) ) {
+		if (headEquipment.isOf(Armors.phantomHood) && this.getWorld().getTimeOfDay() >= 13000 && this.getWorld().getTimeOfDay() <= 23000 && !this.hasStatusEffect(StatusEffects.NIGHT_VISION) ) {
 			provideNightVision(1200);
 		}
 	}
@@ -88,7 +82,7 @@ public abstract class PlayerEntityInject extends LivingEntity implements GameEve
 		ItemStack chestEquipment = getEquippedStack(EquipmentSlot.CHEST);
 		ItemStack legEquipment = getEquippedStack(EquipmentSlot.LEGS);
 		ItemStack feetEquipment = getEquippedStack(EquipmentSlot.FEET);
-		if ((this.isSneaking() && this.isFallFlying()) && headEquipment.isOf(Armours.PHANTOM_HOOD) && chestEquipment.isOf(Items.ELYTRA) && legEquipment.isOf(Armours.PHANTOM_MANTLE) && feetEquipment.isOf(Armours.PHANTOM_SLIPPERS)) {
+		if ((this.isSneaking() && this.isFallFlying()) && headEquipment.isOf(Armors.phantomHood) && chestEquipment.isOf(Items.ELYTRA) && legEquipment.isOf(Armors.phantomMantle) && feetEquipment.isOf(Armors.phantomSlippers)) {
 			provideSlowFalling(1);
 		}
 	}
@@ -99,7 +93,7 @@ public abstract class PlayerEntityInject extends LivingEntity implements GameEve
 		ItemStack chestEquipment = getEquippedStack(EquipmentSlot.CHEST);
 		ItemStack legEquipment = getEquippedStack(EquipmentSlot.LEGS);
 		ItemStack feetEquipment = getEquippedStack(EquipmentSlot.FEET);
-		if (headEquipment.isOf(Armours.SCULK_HELMET) && chestEquipment.isOf(Armours.SCULK_CHESTPLATE) && legEquipment.isOf(Armours.SCULK_LEGGINGS) && feetEquipment.isOf(Armours.SCULK_BOOTS)) {
+		if (headEquipment.isOf(Armors.sculkHelmet) && chestEquipment.isOf(Armors.sculkChestplate) && legEquipment.isOf(Armors.sculkLeggings) && feetEquipment.isOf(Armors.sculkBoots)) {
 			//Make it give darkness, strength and slowness, then highlight all mobs that trigger a sculk sensor/screamer (including calibrated)
 			provideDarkness(200);
 			provideSlownessI(200);
@@ -142,5 +136,4 @@ public abstract class PlayerEntityInject extends LivingEntity implements GameEve
 	private void provideStrength(int stduration) {
 		((LivingEntityInvoker) this).invokeAddStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, stduration, 0, false, true, true));
 	}
-
 }

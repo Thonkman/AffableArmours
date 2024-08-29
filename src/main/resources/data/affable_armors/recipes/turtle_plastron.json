@@ -4,15 +4,18 @@
   "key": {
     "X": {
       "item": "minecraft:scute"
+    },
+    "M": {
+      "item": "minecraft:bone_meal"
     }
   },
   "pattern": [
-    "   ",
-    "X X",
-    "X X"
+    "XXX",
+    "XMX",
+    "XMX"
   ],
   "result": {
-    "item": "affable_armours:turtle_flippers"
+    "item": "affable_armors:turtle_plastron"
   },
   "show_notification": true
 }
