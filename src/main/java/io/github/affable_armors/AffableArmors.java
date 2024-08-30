@@ -1,6 +1,7 @@
 package io.github.affable_armors;
 
 import io.github.affable_armors.armors.Armors;
+import io.github.affable_armors.effects.Effects;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
@@ -17,5 +18,6 @@ public class AffableArmors implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		Armors.register();
+		Effects.register();
 	}
 }

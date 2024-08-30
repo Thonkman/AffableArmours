@@ -8,7 +8,9 @@
     "LivingEntityInvoker",
     "PlayerEntityInject"
   ],
-  "client": [],
+  "client": [
+    "client.MinecraftClientInject"
+  ],
   "injectors": {
     "defaultRequire": 1
 	}

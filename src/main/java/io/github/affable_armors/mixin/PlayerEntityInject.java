@@ -98,6 +98,7 @@ public abstract class PlayerEntityInject extends LivingEntity implements GameEve
 			provideDarkness(200);
 			provideSlownessI(200);
 			provideStrength(200);
+			
 		}
 	}
 

@@ -1,8 +1,8 @@
 package io.github.affable_armors;
 
+import io.github.affable_armors.effects.Effects;
 import io.github.affable_armors.mixin.LivingEntityInvoker;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.registry.Holder;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Vec3d;
@@ -24,7 +24,7 @@ public record ApplyGlowingEventListener(PositionSource positionSource, int range
 	@Override
 	public boolean listen(ServerWorld world, Holder<GameEvent> event, GameEvent.Context context, Vec3d pos) {
 		if (event.equals(GameEvent.SCULK_SENSOR_TENDRILS_CLICKING)) {
-			((LivingEntityInvoker) context.sourceEntity()).invokeAddStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 423, 0, false, true, true));
+			((LivingEntityInvoker) context.sourceEntity()).invokeAddStatusEffect(new StatusEffectInstance(Effects.E, 100, 0, false, true, true));
 			return true;
 		}
 
