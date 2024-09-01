@@ -55,6 +55,7 @@ public abstract class PlayerEntityInject extends LivingEntity {
 		updatePhantomArmour();
 		updateDragonArmour();
 		updateSculkArmour();
+		updateShulkerArmour();
 	}
 
 
@@ -89,6 +90,26 @@ public abstract class PlayerEntityInject extends LivingEntity {
 			provideSlowFalling(1);
 		}
 	}
+
+	@Unique
+	private void updateShulkerArmour() {
+		ItemStack headEquipment = getEquippedStack(EquipmentSlot.HEAD);
+		ItemStack chestEquipment = getEquippedStack(EquipmentSlot.CHEST);
+		ItemStack legEquipment = getEquippedStack(EquipmentSlot.LEGS);
+		ItemStack feetEquipment = getEquippedStack(EquipmentSlot.FEET);
+		if (headEquipment.isOf(Armors.shulkerShell) && chestEquipment.isOf(Items.ELYTRA) && legEquipment.isOf(Armors.shulkerPads) && feetEquipment.isOf(Armors.shulkerBoots)) {
+			if (this.isSneaking()) {
+				//make a shield!
+				this.isShulking();
+				LOGGER.info(String.valueOf(isBlocking()));
+			}
+		}
+	}
+
+	private boolean isShulking() {
+		return false;
+	}
+
 	@Unique
 	int dragonCharge = 0;
 	@Unique
