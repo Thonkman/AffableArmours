@@ -1,11 +1,7 @@
 package io.github.affable_armors.mixin;
 
-
 import io.github.affable_armors.armors.Armors;
-import net.minecraft.entity.EntityPose;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.*;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
@@ -15,7 +11,6 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
-//import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Final;
@@ -25,8 +20,6 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-
 
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityInject extends LivingEntity {
@@ -105,7 +98,7 @@ public abstract class PlayerEntityInject extends LivingEntity {
 		ItemStack legEquipment = getEquippedStack(EquipmentSlot.LEGS);
 		ItemStack feetEquipment = getEquippedStack(EquipmentSlot.FEET);
 
-		if (headEquipment.isOf(Armours.DRAGON_VISOR) && chestEquipment.isOf(Items.ELYTRA) && legEquipment.isOf(Armours.DRAGON_SCALEMAIL) && feetEquipment.isOf(Armours.DRAGON_CLAWS) && this.isOnGround() && this.isSneaking()) {
+		if (headEquipment.isOf(Armors.dragonVisor) && chestEquipment.isOf(Items.ELYTRA) && legEquipment.isOf(Armors.dragonScalemail) && feetEquipment.isOf(Armors.dragonClaws) && this.isOnGround() && this.isSneaking()) {
 			//Holding shift for 5 seconds while on the ground will shoot you up in the air (maybe holding it for longer will send you higher?) I'm talking to like +150y height.
 			// Holding shift while gliding (it's called fall flying) Will spread Dragons breath where the player is facing like how the dragon does
 			dragonCharge++;
@@ -158,9 +151,7 @@ public abstract class PlayerEntityInject extends LivingEntity {
 			dragonCharge = 0;
 		}
 
-		}
 	}
-
 	@Unique
 	private void updateSculkArmour() {
 		ItemStack headEquipment = getEquippedStack(EquipmentSlot.HEAD);
@@ -212,3 +203,6 @@ public abstract class PlayerEntityInject extends LivingEntity {
 		((LivingEntityInvoker) this).invokeAddStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, stduration, 0, false, true, true));
 	}
 }
+
+
+
