@@ -5,7 +5,6 @@ import io.github.affable_armors.effects.Effects;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.registry.Holder;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -20,13 +19,13 @@ public class MinecraftClientInject {
 		AtomicBoolean wrongArmor = new AtomicBoolean(false);
 		MinecraftClient.getInstance().player.getAllArmorItems().forEach(
 			item -> {
-				if (!item.isOf(Armors.sculkBoots)) {
+				if (!item.isOf(Armors.sculkBoots) && !item.isOf(Armors.sculkLeggings) && !item.isOf(Armors.sculkChestplate) && !item.isOf(Armors.sculkHelmet)) {
 					wrongArmor.set(true);
 				}
 			}
 		);
 
-		if (/*!wrongArmor.get()*/ entity instanceof LivingEntity living && living.hasStatusEffect(Effects.E)) {
+		if (!wrongArmor.get() && entity instanceof LivingEntity living && living.hasStatusEffect(Effects.E)) {
 			cir.setReturnValue(true);
 		}
 	}
