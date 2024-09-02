@@ -127,52 +127,54 @@ public abstract class PlayerEntityInject extends LivingEntity {
 			if (dragonCharge >= 50) {
 				this.getWorld().addParticle(ParticleTypes.PORTAL, this.getParticleX(2), this.getRandomBodyY() - 0.25, this.getParticleZ(2), (this.random.nextDouble() - 0.5) * 2.0, -this.random.nextDouble(), (this.random.nextDouble() - 0.5) * 2.0);
 			}
-		}
-
-		if (!this.isSneaking()) {
-			if (dragonCharge >= 50) {
-				this.getWorld().playSound(this.getX(), this.getY(), this.getZ(), SoundEvents.ENTITY_ENDER_DRAGON_FLAP, SoundCategory.PLAYERS, 5.0F, 0.8F + this.random.nextFloat() * 0.3F, false);
-				LOGGER.info("flight inbound");
-				LOGGER.info(String.valueOf(dragonCharge));
-				dragonCharge = 0;
-				LOGGER.info(String.valueOf(dragonCharge));
-				this.addVelocity(0, 5, 0);
+			if (!this.isSneaking()) {
+				if (dragonCharge >= 50) {
+					this.getWorld().playSound(this.getX(), this.getY(), this.getZ(), SoundEvents.ENTITY_ENDER_DRAGON_FLAP, SoundCategory.PLAYERS, 5.0F, 0.8F + this.random.nextFloat() * 0.3F, false);
+					LOGGER.info("flight inbound");
+					LOGGER.info(String.valueOf(dragonCharge));
+					dragonCharge = 0;
+					LOGGER.info(String.valueOf(dragonCharge));
+					this.addVelocity(0, 5, 0);
+				}
+				if (dragonCharge <= 0) {
+					dragonCharge = 0;
+				}
 			}
-			if (dragonCharge <= 0) {
-				dragonCharge = 0;
-			}
-		}
 //		Vec3d vec3d = (new Vec3d(this.getX(), 0.0, this.getZ())).normalize();
-		double d = this.getX();
-		double e = this.getZ();
-		double g = this.getY();
-		double h = g;
-		BlockPos.Mutable mutable = new BlockPos.Mutable(d, g, e);
+			double d = this.getX();
+			double e = this.getZ();
+			double g = this.getY();
+			double h = g;
+			BlockPos.Mutable mutable = new BlockPos.Mutable(d, g, e);
 
-		while(this.getWorld().isAir(mutable)) {
-			--h;
-			if (h < 0.0) {
-				h = g;
-				break;
+			while(this.getWorld().isAir(mutable)) {
+				--h;
+				if (h < 0.0) {
+					h = g;
+					break;
+				}
+
+				mutable.set(d, h, e);
 			}
 
-			mutable.set(d, h, e);
+			if (this.isSneaking() && !this.isOnGround() && dragonCharge >= 0) {
+				AreaEffectCloudEntity areaEffectCloudEntity = new AreaEffectCloudEntity(this.getWorld(), d, h, e);
+				areaEffectCloudEntity.setRadius(3.0F);
+				areaEffectCloudEntity.setRadiusOnUse(-0.5F);
+				areaEffectCloudEntity.setDuration(200);
+				areaEffectCloudEntity.setRadiusGrowth(-areaEffectCloudEntity.getRadius() / (float)areaEffectCloudEntity.getDuration());
+				areaEffectCloudEntity.addEffect(new StatusEffectInstance(StatusEffects.INSTANT_DAMAGE));
+				areaEffectCloudEntity.setParticleType(ParticleTypes.DRAGON_BREATH);
+				areaEffectCloudEntity.setOwner(this);
+				this.getWorld().spawnEntity(areaEffectCloudEntity);
+				dragonCharge = 0;
+			}
+
+		}
 		}
 
-		if (this.isSneaking() && !this.isOnGround() && dragonCharge >= 0) {
-			AreaEffectCloudEntity areaEffectCloudEntity = new AreaEffectCloudEntity(this.getWorld(), d, h, e);
-			areaEffectCloudEntity.setRadius(3.0F);
-			areaEffectCloudEntity.setRadiusOnUse(-0.5F);
-			areaEffectCloudEntity.setDuration(200);
-			areaEffectCloudEntity.setRadiusGrowth(-areaEffectCloudEntity.getRadius() / (float)areaEffectCloudEntity.getDuration());
-			areaEffectCloudEntity.addEffect(new StatusEffectInstance(StatusEffects.INSTANT_DAMAGE));
-			areaEffectCloudEntity.setParticleType(ParticleTypes.DRAGON_BREATH);
-			areaEffectCloudEntity.setOwner(this);
-			this.getWorld().spawnEntity(areaEffectCloudEntity);
-			dragonCharge = 0;
-		}
 
-	}
+
 	@Unique
 	private void updateSculkArmour() {
 		ItemStack headEquipment = getEquippedStack(EquipmentSlot.HEAD);

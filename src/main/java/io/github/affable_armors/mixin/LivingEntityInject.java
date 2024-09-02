@@ -2,6 +2,8 @@ package io.github.affable_armors.mixin;
 
 import io.github.affable_armors.ApplyGlowingEventListener;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
@@ -24,8 +26,8 @@ public class LivingEntityInject {
 	@SuppressWarnings("all")
 	@Inject(method = "updateDynamicGameEventListener", at = @At("TAIL"))
 	public void update(BiConsumer<DynamicGameEventListener<?>, ServerWorld> updater, CallbackInfo ci) {
-		if (((Object) this) instanceof PlayerEntity && world instanceof ServerWorld serverWorld) {
-			updater.accept(new DynamicGameEventListener<>(new ApplyGlowingEventListener(new EntityPositionSource((Entity) ((Object) this), 2), GameEvent.SCULK_SENSOR_TENDRILS_CLICKING.value().range())), serverWorld);
+		if (((Object) this) instanceof LivingEntity && world instanceof ServerWorld serverWorld) {
+			updater.accept(new DynamicGameEventListener<>(new ApplyGlowingEventListener(new EntityPositionSource((Entity) ((Object) this), 0), GameEvent.SCULK_SENSOR_TENDRILS_CLICKING.value().range())), serverWorld);
 		}
 	}
 }
