@@ -11,6 +11,7 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Final;
@@ -20,6 +21,9 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityInject extends LivingEntity {
@@ -177,6 +181,7 @@ public abstract class PlayerEntityInject extends LivingEntity {
 
 	@Unique
 	private void updateSculkArmour() {
+
 		ItemStack headEquipment = getEquippedStack(EquipmentSlot.HEAD);
 		ItemStack chestEquipment = getEquippedStack(EquipmentSlot.CHEST);
 		ItemStack legEquipment = getEquippedStack(EquipmentSlot.LEGS);
@@ -187,6 +192,16 @@ public abstract class PlayerEntityInject extends LivingEntity {
 			provideSlownessI(200);
 			provideStrength(200);
 
+			List<LivingEntity> entities = new ArrayList<>();
+			getWorld().getOtherEntities(this, Box.of(this.getPos(), 20, 20, 20)).forEach(entity -> {
+				if (entity instanceof LivingEntity) {
+					//todo: filter out anything that isnt a living entity
+					entities.add((LivingEntity) entity);
+				}
+			});
+			entities.forEach(entity -> {
+
+			});
 		}
 	}
 
