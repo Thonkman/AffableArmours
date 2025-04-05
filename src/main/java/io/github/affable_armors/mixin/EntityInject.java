@@ -2,9 +2,7 @@ package io.github.affable_armors.mixin;
 
 import io.github.affable_armors.ApplyGlowingEventListener;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.event.EntityPositionSource;
@@ -19,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.function.BiConsumer;
 
 @Mixin(Entity.class)
-public class LivingEntityInject {
+public class EntityInject {
 	@Shadow
 	private World world;
 
