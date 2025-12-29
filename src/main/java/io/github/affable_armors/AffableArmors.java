@@ -33,7 +33,7 @@ public class AffableArmors implements ModInitializer {
 			String checkEntity = payload.checkEntity();
 
 			LivingEntity entity = (LivingEntity) context.player().getServerWorld().getEntity(UUID.fromString(checkEntity));
-
+			boolean checkStatus = entity.hasStatusEffect(Effects.E);
 			if (entity.hasStatusEffect(Effects.E)) {
 				ServerPlayNetworking.send(context.player(), new AffableNetworking.ResultPayload(true));
 			}

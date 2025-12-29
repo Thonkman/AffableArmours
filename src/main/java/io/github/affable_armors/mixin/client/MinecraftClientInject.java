@@ -1,26 +1,20 @@
 package io.github.affable_armors.mixin.client;
 
-import io.github.affable_armors.AffableArmors;
 import io.github.affable_armors.AffableNetworking;
 import io.github.affable_armors.armors.Armors;
-import io.github.affable_armors.effects.Effects;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.packet.payload.CustomPayload;
 import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Collection;
@@ -46,7 +40,7 @@ public class MinecraftClientInject {
 				ClientPlayNetworking.registerGlobalReceiver(AffableNetworking.ResultPayload.ID, ((payload, context) -> {
 					if (payload.result()) {
 						cir.setReturnValue(true);
-					}
+			}
 				}));
 
 			}
