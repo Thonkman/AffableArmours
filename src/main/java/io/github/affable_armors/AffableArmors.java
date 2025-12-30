@@ -7,7 +7,6 @@ import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
-import net.minecraft.world.World;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +24,7 @@ public class AffableArmors implements ModInitializer {
 	public void onInitialize() {
 		Armors.register();
 		Effects.register();
+
 
 		PayloadTypeRegistry.playC2S().register(AffableNetworking.CheckEntityPayload.ID, AffableNetworking.CheckEntityPayload.CODEC);
 		PayloadTypeRegistry.playS2C().register(AffableNetworking.ResultPayload.ID, AffableNetworking.ResultPayload.CODEC);
